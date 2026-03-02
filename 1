@@ -1,0 +1,15 @@
+import pandas as pd
+import dask.dataframe as dd
+
+# Load the Big Dataset
+# Note: Ensure the CSV is in the same folder or provide the full path
+df_big = dd.read_csv('Trips_By_Distance.csv')
+
+# Step 1: Filter for National Level data as per Project Aim 1.2
+df_national = df_big[df_big['Level'] == 'National']
+
+# Step 2: Drop columns that are empty at the National level (Section 2.3)
+cols_to_drop = ['State FIPS', 'State Postal Code', 'County FIPS', 'County Name']
+df_clean = df_national.drop(columns=cols_to_drop)
+
+print("Data successfully loaded and filtered for National level.")
