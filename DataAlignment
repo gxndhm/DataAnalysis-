@@ -1,0 +1,26 @@
+# Load the Small Dataset for Week 32 (August 4-10, 2019)
+df_small = pd.read_csv('Trips_Full_Data.csv')
+
+# Step 3: Align the big dataset dates with the small dataset (Week 32)
+# Ensuring the 'Date' column is in datetime format for comparison
+df_clean['Date'] = dd.to_datetime(df_clean['Date'])
+df_small['Date'] = pd.to_datetime(df_small['Date'])
+
+start_date = '2019-08-04'
+end_date   = '2019-08-10'
+
+# Filter Big Dataset to match Week 32 for direct comparison
+df_week32_national = df_clean[(df_clean['Date'] >= start_date) & (df_clean['Date'] <= end_date)]
+
+# Step 4: Q4 Analysis - Mean travellers per distance category
+# Using the small dataset as per methodology Section 3.4
+distance_cols = [
+    'Trips <1 Mile', 'Trips 1-3 Miles', 'Trips 3-5 Miles', 
+    'Trips 5-10 Miles', 'Trips 10-25 Miles', 'Trips 25-50 Miles', 
+    'Trips 50-100 Miles', 'Trips 100-250 Miles', 'Trips 250-500 Miles', 
+    'Trips 500+ Miles'
+]
+
+q4_results = df_small[distance_cols].mean()
+print("Q4 Distance Distribution calculated:")
+print(q4_results)
