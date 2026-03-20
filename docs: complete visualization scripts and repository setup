@@ -1,0 +1,45 @@
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Setting the visual style for BTS standards (Section 2.10)
+sns.set_theme(style="whitegrid")
+
+# --- Figure 7: Parallel Computing Execution Time (Section 3.5) ---
+# Data from Table 1 in the report
+config = ['1 Worker\n(Serial)', '10 Workers\n(Parallel)', '20 Workers\n(Parallel)']
+times = [148.42, 42.15, 26.88]
+
+plt.figure(figsize=(10, 6))
+bars = plt.bar(config, times, color=['#e74c3c', '#3498db', '#2ecc71'])
+plt.ylabel('Execution Time (Seconds)')
+plt.title('Serial vs Parallel Processing Execution Time Comparison')
+
+# Adding data labels on top of bars
+for bar in bars:
+    yval = bar.get_height()
+    plt.text(bar.get_x() + bar.get_width()/2, yval + 2, f'{yval}s', ha='center', fontweight='bold')
+
+plt.tight_layout()
+plt.savefig('figure7_performance.png')
+plt.show()
+
+# --- Figure 4: Q2 Threshold Scatter Plot (Section 3.2) ---
+# Visualizing the Week 32 peak (August 4-10, 2019)
+plt.figure(figsize=(12, 6))
+plt.scatter(week32_stats['Date'], week32_stats['Number of Trips 10-25'], 
+            color='blue', label='10-25 Trips > 10M', s=100, alpha=0.7)
+plt.scatter(week32_stats['Date'], week32_stats['Number of Trips 50-100'], 
+            color='red', marker='^', label='50-100 Trips > 10M', s=100, alpha=0.7)
+
+# Drawing the critical 10M threshold line (Section 1.2)
+plt.axhline(y=10000000, color='gray', linestyle='--', label='10M Threshold')
+
+plt.yscale('log') # Using log scale due to the large gap between brackets
+plt.ylabel('Number of Trips (Log Scale)')
+plt.xlabel('Date (August 2019)')
+plt.title('Dates Where >10 Million People Conducted 10-25 vs 50-100 Trips')
+plt.legend()
+plt.xticks(rotation=45)
+plt.tight_layout()
+plt.savefig('figure4_thresholds.png')
+plt.show()
